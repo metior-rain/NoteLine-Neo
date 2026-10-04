@@ -2,3 +2,7 @@ node_modules/
 .DS_Store
 *.log
 .test-artifacts/
+
+# Keep locally exported charts and song resources out of the repository.
+exports/*
+!exports/noteline-chart-maker.zip
