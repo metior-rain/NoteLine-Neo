@@ -1,0 +1,17 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NoteLine · 判定点与弹跳入场</title>
+<style>body{margin:0;font:16px system-ui;color:#304866;background:linear-gradient(135deg,#fff2db,#eef8ff 50%,#f8e8f1)}main{max-width:1100px;margin:24px auto;padding:20px}header{display:flex;align-items:center;gap:16px}h1{font-size:24px;margin:0 0 8px}button{padding:12px 20px;border:1px solid #d0dceb;border-radius:14px;background:#fff;color:#304866;box-shadow:0 4px 0 #cbd7e8;font:inherit}.stage{position:relative;height:650px;margin-top:24px;border:1px solid #d2deeb;border-radius:28px;background:#ffffffae;overflow:hidden}canvas{width:100%;height:100%}.labels{position:absolute;inset:28px 32px auto;display:grid;grid-template-columns:repeat(4,1fr);text-align:center;font-weight:700}.hint{margin-left:auto;color:#71829a;font-size:14px}small{display:block;margin-top:8px;color:#7389a0;font-weight:400}</style>
+<body><main><header><div><h1>判定点反馈 / 弹跳入场</h1><span>普通音符保持实心，弹跳提前显示空心双箭头与残影。</span></div><span class="hint">按住 K，或点下方按钮</span></header><div class="stage"><div class="labels"><span>普通音符<small>实心圆点</small></span><span>弹跳音符<small>空心弹力球 · 上下箭头</small></span><span>未按下<small>默认判定点</small></span><span id="state">按住中<small>等比缩小 · 柔和光晕</small></span></div><canvas id="field"></canvas></div><p><button id="toggle">松开判定点</button> <button id="tap">短按反馈</button> <button id="hit">命中扩散</button></p></main>
+<script type="module">
+import {GameRenderer} from '../runtime/game-renderer.js';
+const canvas=document.querySelector('#field'),r=await GameRenderer.create(canvas),inputs=Array.from({length:4},()=>new Set());
+const route={kind:'bounce',lane:1,time:1000,end:2000,path:[{lane:3,time:2000}]};
+const session={notes:[{lane:0,time:1000},{...route,route,routeIndex:0}],holds:[]};
+function resize(){const box=canvas.parentElement.getBoundingClientRect();r.resize({w:box.width,h:650,left:32,trackWidth:box.width-64,topY:100,hitY:540});}
+new ResizeObserver(resize).observe(canvas.parentElement);resize();r.warmup(session,1);inputs[3].add('demo');r.press(3);
+const toggle=document.querySelector('#toggle');
+function held(on){inputs[3].clear();if(on){inputs[3].add('demo');r.press(3);}toggle.textContent=on?'松开判定点':'按住判定点';document.querySelector('#state').innerHTML=on?'按住中<small>等比缩小 · 柔和光晕</small>':'已松开<small>等比回弹 · 光晕淡出</small>';}
+toggle.onclick=()=>held(!inputs[3].size);document.querySelector('#tap').onclick=()=>{held(false);r.press(3);};
+document.querySelector('#hit').onclick=()=>r.feedback({note:{lane:3,time:400},rating:'perfect',lane:3,time:400});
+document.addEventListener('keydown',e=>{if(e.code==='KeyK'&&!e.repeat){e.preventDefault();held(true);}});document.addEventListener('keyup',e=>{if(e.code==='KeyK'){e.preventDefault();held(false);}});
+function frame(now){r.draw(now,400,session,'playing',inputs,1);requestAnimationFrame(frame);}requestAnimationFrame(frame);
+</script></html>

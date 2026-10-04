@@ -1,0 +1,24 @@
+{
+  "name": "noteline-reborn",
+  "version": "5.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "start": "node server.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "check": "node --check src/difficulty-switch.js && node --check src/difficulties.js && node --check src/buffered-music.js && node --check src/app.js && node --check src/editor.js && node --check src/editor-model.js && node --check src/shared.js && node --check src/engine.js && node --check server.mjs && node --check src/game-renderer.js && node --check src/impact.js && node --check src/motion.js && node --check scripts/build.mjs && node --check src/chart-format.js && node --check src/launch-clock.js && node --check src/score-package.js && node --check src/theme.js && node --check src/chords.js && node --check src/results.js && node --check src/result-summary.js && node --check src/scroll-geometry.js && node --check src/path-notes.js && node --check src/path-renderer.js",
+    "build": "node scripts/build.mjs",
+    "predev": "npm run build",
+    "prestart": "npm run build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "pixi.js": "^8.18.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

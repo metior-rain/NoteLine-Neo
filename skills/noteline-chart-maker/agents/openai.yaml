@@ -1,0 +1,4 @@
+interface:
+  display_name: "NoteLine 谱面制作"
+  short_description: "分析音乐节拍与段落，编排多难度谱面并打包音频、封面和完整校验"
+  default_prompt: "使用 $noteline-chart-maker 为这首音乐制作简单、普通、困难三套 NoteLine 谱面，并导出完整谱面包。"

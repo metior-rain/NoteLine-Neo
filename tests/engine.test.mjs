@@ -1,0 +1,39 @@
+import {readScorePackage} from '../src/score-package.js';
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { normalizeChart,parseChartText,chartForMode,RhythmSession,grade } from '../src/engine.js';
+const chart=notes=>normalizeChart({version:3,name:'Test',notes,duration:5000});
+test('legacy countdown is removed without executing source',()=>{const old={0:{0:{start:3100},1:{start:'end'}},1:{0:{start:3800}},2:{},3:{},musicLong:8000};const c=parseChartText('var songData = '+JSON.stringify(old)+';');assert.deepEqual(c.notes,[{lane:0,time:100},{lane:1,time:800}]);assert.equal(c.duration,5000);assert.throws(()=>parseChartText('var songData = '+JSON.stringify(old)+'; alert(1);'));});
+test('modern tap and hold timestamps are preserved and sorted',()=>{const c=chart([{lane:2,time:1200,end:2300},{lane:0,time:0}]);assert.equal(c.notes[0].time,0);assert.equal(c.notes[1].end,2300);});
+test('reject malformed, duplicate, overlapping and impossible holds',()=>{for(const notes of [[],[{lane:4,time:5}],[{lane:0,time:-1}],[{lane:0,time:'5'}],[{lane:0,time:NaN}],[{lane:0,time:10},{lane:0,time:10}],[{lane:0,time:100,end:150}],[{lane:0,time:100,end:1000},{lane:0,time:500}],[{lane:0,time:100,end:1000},{lane:0,time:1000}]])assert.throws(()=>chart(notes));});
+test('tap windows and weights are consistent',()=>{const s=new RhythmSession(chart([{lane:0,time:1000},{lane:1,time:2000},{lane:2,time:3000},{lane:3,time:4000}]));assert.equal(s.hit(0,1045).rating,'perfect');assert.equal(s.hit(1,1910).rating,'great');assert.equal(s.hit(2,3140).rating,'good');s.tick(4141);assert.deepEqual(s.counts,{perfect:1,great:1,good:1,miss:1});assert.equal(s.score,537500);assert.equal(s.maxCombo,3);assert.equal(s.combo,0);});
+test('early hits consume nearby heads once and break combo',()=>{const s=new RhythmSession(chart([{lane:0,time:1000},{lane:1,time:2000,end:2500}]));s.hit(0,1000);const r=s.hit(1,1820);assert.equal(r.rating,'miss');assert.equal(r.reason,'early');assert.equal(s.combo,0);assert.equal(s.notes[1].judged,true);assert.equal(s.holds[1],null);assert.equal(s.hit(1,2000),null);assert.equal(s.counts.miss,1);assert.equal(s.counts.perfect,1);assert.equal(s.maxCombo,1);});
+test('offscreen future notes are not removed by empty presses',()=>{const s=new RhythmSession(chart([{lane:0,time:4000}]),{approachMs:1800});assert.equal(s.hit(0,1000),null);assert.equal(s.notes[0].judged,false);assert.equal(s.hit(0,2300),null);assert.equal(s.notes[0].judged,false);assert.equal(s.hit(0,4000).rating,'perfect');});
+test('empty presses before, between and after notes preserve combo and results',()=>{
+ const s=new RhythmSession(chart([{lane:0,time:1000},{lane:1,time:2000}]));
+ for(const lane of [2,3])assert.equal(s.hit(lane,900),null);
+ s.hit(0,1000);
+ for(const [lane,time] of [[0,1001],[2,1100],[1,1500],[3,1600]]){
+  assert.equal(s.hit(lane,time),null);assert.equal(s.combo,1);assert.equal(s.maxCombo,1);
+  assert.equal(s.score,500000);assert.equal(s.accuracy,100);assert.equal(s.notes[1].judged,false);
+ }
+ s.hit(1,2000);for(let lane=0;lane<4;lane++)assert.equal(s.hit(lane,2001),null);
+ assert.equal(s.combo,2);assert.equal(s.maxCombo,2);assert.equal(s.score,1000000);assert.equal(s.accuracy,100);
+ assert.deepEqual(s.counts,{perfect:2,great:0,good:0,miss:0});assert.deepEqual(s.errors,[0,0]);
+});
+test('late input expires intervening notes and resets combo',()=>{const s=new RhythmSession(chart([{lane:0,time:1000},{lane:1,time:1500},{lane:0,time:2000}]));s.hit(0,1000);s.hit(0,2000);assert.equal(s.counts.miss,1);assert.equal(s.combo,1);assert.equal(s.maxCombo,1);});
+test('simultaneous four-lane chord judges independently',()=>{const s=new RhythmSession(chart(Array.from({length:4},(_,lane)=>({lane,time:1000}))));for(let lane=0;lane<4;lane++)s.hit(lane,1000);assert.equal(s.maxCombo,4);assert.equal(s.score,1000000);assert.equal(s.complete,true);});
+test('hold head remains unscored until its tail is sustained',()=>{const s=new RhythmSession(chart([{lane:0,time:1000,end:2000}]));const r=s.hit(0,1000);assert.equal(r.head,true);assert.equal(s.counts.perfect,0);assert.equal(s.holds[0].holding,true);s.tick(1999);assert.equal(s.complete,false);s.tick(2000);assert.equal(s.score,1000000);assert.equal(s.combo,1);assert.equal(s.release(0,2100),null);});
+test('early hold release is a miss and immediately breaks combo',()=>{const s=new RhythmSession(chart([{lane:1,time:500},{lane:0,time:1000,end:2000}]));s.hit(1,500);s.hit(0,1000);assert.equal(s.release(0,1500).rating,'miss');assert.equal(s.combo,0);assert.equal(s.holds[0],null);s.tick(2500);assert.equal(s.counts.miss,1);});
+test('hold release tolerance uses the weaker head or tail rating',()=>{const s=new RhythmSession(chart([{lane:0,time:1000,end:2000},{lane:1,time:3000,end:4000}]));s.hit(0,1000);assert.equal(s.release(0,1940).rating,'great');s.hit(1,3100);assert.equal(s.release(1,4000).rating,'good');});
+test('a missed hold cannot be grabbed by pressing its tail',()=>{const s=new RhythmSession(chart([{lane:0,time:1000,end:2000}]));s.tick(1200);assert.equal(s.hit(0,1900),null);assert.equal(s.counts.miss,1);assert.equal(s.score,0);});
+test('paused music time leaves active holds and notes unchanged',()=>{const s=new RhythmSession(chart([{lane:0,time:1000,end:2000},{lane:1,time:2500}]));s.hit(0,1000);s.tick(1400);s.tick(1400);assert.equal(s.holds[0].holding,true);assert.equal(s.counts.miss,0);s.tick(2000);s.hit(1,2500);assert.equal(s.score,1000000);});
+test('autoplay completes tap and hold once, with head and tail phases',()=>{const s=new RhythmSession(chart([{lane:0,time:1000,end:2000},{lane:1,time:1500}]));s.auto(1000);assert.equal(s.holds[0].holding,true);assert.equal(s.counts.perfect,0);s.auto(1500);s.auto(2000);s.auto(2001);assert.equal(s.counts.perfect,2);assert.equal(s.score,1000000);});
+test('finish counts unfinished holds and future notes as misses',()=>{const s=new RhythmSession(chart([{lane:0,time:1000,end:2000},{lane:1,time:3000}]));s.hit(0,1000);s.finish();assert.equal(s.complete,true);assert.equal(s.counts.miss,2);});
+test('simplified mode preserves note type, duration and original timestamps',()=>{const c=chart([{lane:0,time:1000,end:2000},{lane:1,time:1500},{lane:2,time:2200}]);const easy=chartForMode(c,'easy');assert.equal(easy.notes.length,2);assert.equal(easy.notes[0].end,2000);assert.equal(easy.notes[1].time,2200);});
+test('all five original charts can be exactly hit without a break',async()=>{for(const id of ['song1','song2','song3','song4','sp1']){const c=(await readScorePackage(new Blob([await readFile(new URL(`../exports/builtin-scores/${id}.nlchart`,import.meta.url))]))).chart;const s=new RhythmSession(c);for(const n of c.notes)assert.equal(s.hit(n.lane,n.time).rating,'perfect');assert.equal(s.score,1000000);assert.equal(s.maxCombo,c.notes.length);}});
+test('grades are bounded',()=>{assert.equal(grade(1000000),'S+');assert.equal(grade(950000),'S');assert.equal(grade(900000),'A');assert.equal(grade(0),'D');});
+test('included hold study completes all 30 holds and 61 taps exactly once',async()=>{const c=(await readScorePackage(new Blob([await readFile(new URL('../exports/builtin-scores/hold-study.nlchart',import.meta.url))]))).chart;assert.equal(c.notes.filter(n=>n.end!==undefined).length,30);const s=new RhythmSession(c);for(let time=0;time<=c.duration;time+=16)s.auto(time);s.auto(c.duration);assert.equal(s.complete,true);assert.equal(s.counts.perfect,91);assert.equal(s.score,1000000);});
+
+test("early window has fixed precise boundaries",()=>{for(const [ahead,rating] of [[140,"good"],[140.001,"miss"],[220,"miss"],[220.001,null],[1800,null]]){const s=new RhythmSession(chart([{lane:0,time:2000}]));assert.equal(s.hit(0,2000-ahead)?.rating??null,rating);assert.equal(s.notes[0].judged,rating!==null);}});

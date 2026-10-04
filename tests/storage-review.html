@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<title>NoteLine · 存储验证</title>
+<style>
+body{font:18px system-ui;padding:40px;background:#f5f9ff;color:#264665}
+article{background:white;padding:20px;margin:15px 0;border-radius:18px}
+img{width:100px;height:100px;object-fit:cover}pre{white-space:pre-wrap}
+button{padding:12px 24px;border-radius:12px;border:1px solid #bcd4ed;background:#fff;color:#264665;font:inherit}
+</style>
+<h1>曲库持久化验证</h1>
+<p>只读取现有曲库，不修改任何数据。</p>
+<div id="tracks"></div>
+<script type="module">
+import {decodeStoredTrack} from '../src/track-storage.js';
+import {decodeAudio} from '../src/audio-compat.js';
+import {BufferedMusic} from '../src/buffered-music.js';
+const area=document.querySelector('#tracks'),request=indexedDB.open('noteline-library',1);
+request.onerror=()=>area.textContent=request.error.message;
+request.onsuccess=()=>{
+ const db=request.result,query=db.transaction('tracks').objectStore('tracks').getAll();
+ query.onsuccess=async()=>{
+  for(const stored of query.result){
+   const article=document.createElement('article'),title=document.createElement('h2'),info=document.createElement('pre');
+   title.textContent=stored.name;article.append(title,info);area.append(article);
+   try{
+    const track=decodeStoredTrack(stored);
+    info.textContent=`保存格式：${stored.storageVersion||1}\n音频 ArrayBuffer：${stored.audioBytes instanceof ArrayBuffer}\n封面 ArrayBuffer：${stored.coverBytes instanceof ArrayBuffer}`;
+    for(const kind of ['audio','cover']){
+     const bytes=stored[kind+'Bytes'];
+     if(bytes)info.textContent+=`\n${kind} 字节数：${bytes.byteLength}，文件头：${[...new Uint8Array(bytes).slice(0,16)].map(n=>n.toString(16).padStart(2,'0')).join(' ')}`;
+    }
+    if(track.coverBlob){
+     const img=document.createElement('img');img.src=URL.createObjectURL(track.coverBlob);
+     try{await img.decode();article.append(img);info.textContent+='\n封面读取：正常';}catch{info.textContent+='\n封面读取：失败';}
+    }
+    const Context=window.AudioContext||window.webkitAudioContext,c=new Context();
+    try{const buffer=await decodeAudio(c,await track.audioBlob.arrayBuffer());info.textContent+=`\n音频解码：正常（${buffer.duration.toFixed(2)} 秒）`;}finally{await c.close();}
+    const play=document.createElement('button'),status=document.createElement('p');
+    play.textContent='验证播放（3 秒）';article.append(play,status);
+    play.onclick=async()=>{
+     play.disabled=true;status.textContent='准备播放…';const context=new Context(),music=new BufferedMusic(()=>context);
+     try{
+      const access=music.unlock();await music.prepare(track.audioBlob);await access;await music.play();
+      status.textContent='正在播放';
+      await new Promise(resolve=>setTimeout(resolve,3000));
+      status.textContent=music.currentTime>2?`播放正常 · 时钟已前进 ${music.currentTime.toFixed(2)} 秒`:'播放时钟未前进';
+     }catch(error){status.textContent='播放失败：'+error.message;}
+     finally{music.clear();await context.close();play.disabled=false;}
+    };
+   }catch(error){info.textContent+='\n读取失败：'+error.message;}
+  }
+  db.close();
+ };
+};
+</script>
+</html>

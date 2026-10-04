@@ -1,0 +1,101 @@
+/* Shared interactive language: raised idle controls, saturated selected controls. */
+/* Touch interaction must not select labels or open iOS long-press callouts. */
+.player,.player *,.editor,.editor *{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+:is(.player,.editor) :is(input:not([type=range]):not([type=file]):not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]):not([type=reset]),textarea,[contenteditable=true],[contenteditable=""]){-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
+:is(.player,.editor) :is(img,a){-webkit-user-drag:none}
+:root{--control-edge:#cedaf0;--control-ink:#30456b;--accent:#447feb;--accent-dark:#2e62c5;--accent-light:#74b2ff}
+.player{background:radial-gradient(circle,#548cce19 1.5px,transparent 1.5px) 0 0/24px 24px,radial-gradient(ellipse at 4% 10%,#ffe2a9a6,transparent 45%),radial-gradient(ellipse at 96% 8%,#9cd4ffc4,transparent 52%),radial-gradient(ellipse at 3% 97%,#d1b3fa96,transparent 46%),radial-gradient(ellipse at 98% 95%,#9be8cf8c,transparent 48%),#f1f8ff}
+#library.floating-panel{background:radial-gradient(circle,#538ccb19 1.5px,transparent 1.5px) 0 0/24px 24px,radial-gradient(ellipse at 2% 0%,#ffe0a3b3,transparent 45%),radial-gradient(ellipse at 99% 4%,#a0d7ffb8,transparent 52%),radial-gradient(ellipse at 0% 100%,#d7b8fc9c,transparent 45%),radial-gradient(ellipse at 100% 98%,#abecd49c,transparent 46%),#f6faff}
+.editor{background:radial-gradient(ellipse at 100% 0%,#acd9ffb0,transparent 52%),radial-gradient(ellipse at 0% 100%,#d9bcff88,transparent 48%),#f1f8ff}
+/* Every action has a visible surface, including formerly bare small icons. */
+.icon-button,.icon-button.small,.toolbar-button,.tool,.file-button,.pill-button,.play-button,.transport-play,.restore-song,.song-pill,
+#library .panel-heading .icon-button,#library .library-tools .icon-button,#library #import-toggle,.song-card .card-actions .favorite,.delete-song,.editor-actions #save-chart,.editor-actions #export-chart,.editor-actions #test-chart,#set-first-beat,#enter-menu{
+ background:linear-gradient(180deg,#fff,#f2f7ff);border:1px solid #cbd9ee;color:#344867;box-shadow:inset 0 2px 0 #fff,0 3px 0 #c6d5eb,0 6px 12px #426ba51a;cursor:pointer;
+ transition:background .18s,border-color .18s,box-shadow .18s,color .18s;
+}
+.icon-button.small{border-radius:10px}
+button:not(:disabled):hover,a.icon-button:hover,.file-button:hover{border-color:#8bb5ef;box-shadow:inset 0 2px 0 #fff,0 3px 0 #a8c5ed,0 7px 16px #4185cd28}
+.song-pick:hover{box-shadow:none;border-color:transparent}
+button:focus-visible,a:focus-visible,.file-button:focus-within,input:focus-visible,select:focus-visible{outline:3px solid #4596f6;outline-offset:4px}
+button:disabled{opacity:.36;cursor:not-allowed;box-shadow:none!important}
+/* Each family owns a color; selection always fills the whole button. */
+#favorite-filter,.favorite{--accent:#d84c91;--accent-dark:#b53872;--accent-light:#f880b3}
+#trash-filter,.editor .tool[data-tool=hold],#export-chart{--accent:#8b59d7;--accent-dark:#6d40b0;--accent-light:#ba8cef}
+.mode-switch button[data-difficulty=easy],.editor .tool[data-tool=tap]{--accent:#d87920;--accent-dark:#ad5c13;--accent-light:#f5b655}
+.mode-switch button[data-difficulty=hard],#follow,#import-toggle,#test-chart{--accent:#169777;--accent-dark:#11795f;--accent-light:#4ecab0}
+#library .mode-switch{gap:8px;padding:5px;background:#ffffff80;border-color:#cbdcf0;border-radius:15px;max-width:350px;min-height:46px}
+.mode-switch button{border-radius:10px;border:1px solid #d0ddf0;background:linear-gradient(#fff,#f3f7ff);box-shadow:0 2px 0 #cfdbeb;color:#405476}
+#library .library-tools .icon-button.active,.song-card .card-actions .favorite.active,.mode-switch button.active,
+.editor .tool.active,.editor .tool.active:hover,.editor .toolbar-button.active,.editor .toolbar-button.active:hover,.editor #follow.active,.editor #follow.active:hover{
+ color:#fff;background:linear-gradient(160deg,var(--accent-light),var(--accent) 72%);border-color:var(--accent);box-shadow:inset 0 1px 0 #ffffff66,0 3px 0 var(--accent-dark),0 6px 15px color-mix(in srgb,var(--accent),transparent 74%);
+}
+#library .library-tools .icon-button.active svg,.song-card .card-actions .favorite.active svg,.editor .tool.active svg,.editor #follow.active svg{color:#fff;filter:none;stroke-width:2.2}
+#favorite-filter.active svg,.favorite.active svg{fill:#ffffff44}
+#follow.active .follow-indicator{background:#fff;box-shadow:0 0 0 3px #ffffff2e}
+#enter-menu,.pause-card #resume{background:linear-gradient(155deg,#75b7ff,#457eec);color:#fff;border-color:#447feb;box-shadow:inset 0 1px 0 #ffffff77,0 4px 0 #2e62c5,0 9px 24px #457eec40}
+#enter-menu svg,.pause-card #resume svg{color:#fff}
+.song-card{border-color:#c6daf1;box-shadow:0 4px 0 #d1e0f0,0 8px 20px #4489cf14}.song-card:hover{border-color:#c6daf1;box-shadow:0 4px 0 #accbec,0 12px 25px #4489cf24}
+/* Settings use compact color-coded rows and a thumb with a generous hit target. */
+.floating-panel#settings{width:320px;padding:23px;border-color:#bcd7f3;background:linear-gradient(155deg,#fff,#f3f8ff);box-shadow:0 12px 45px #365e9b29}
+#settings h2{font-weight:850;color:#304769}#settings .panel-heading{margin-bottom:23px}
+#settings .range-label{margin:19px 0 23px;font-size:12px;font-weight:750;color:#344d71;align-items:center}
+#settings output{font-size:11px;font-weight:800;color:var(--range-color,#357cdf);background:color-mix(in srgb,var(--range-color,#357cdf),white 92%);border:1px solid color-mix(in srgb,var(--range-color,#357cdf),white 76%);padding:5px 9px;border-radius:8px;min-width:55px;text-align:center;font-variant-numeric:tabular-nums}
+.range-label:has(#volume){--range-color:#3d88e8}.range-label:has(#speed){--range-color:#9a5ce0}.range-label:has(#offset){--range-color:#dc8b26}
+input[type=range]{--range-color:#4d8dec;appearance:none;-webkit-appearance:none;height:28px;min-height:28px;padding:0;border:0;border-radius:0;background:transparent;cursor:pointer;box-shadow:none}
+#settings input[type=range]{--range-color:inherit;margin:9px 0 0}
+input[type=range]::-webkit-slider-runnable-track{height:8px;border-radius:20px;background:linear-gradient(to right,var(--range-color) 0 var(--range-fill,50%),#dce7f5 var(--range-fill,50%) 100%);box-shadow:inset 0 1px 2px #315b9020}
+input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:22px;height:22px;margin-top:-7px;border-radius:50%;background:#fff;border:4px solid var(--range-color);box-shadow:0 2px 0 color-mix(in srgb,var(--range-color),#213653 25%),0 3px 8px #3b6da533;transition:box-shadow .18s,scale .18s}
+input[type=range]:hover::-webkit-slider-thumb{box-shadow:0 0 0 5px color-mix(in srgb,var(--range-color),transparent 88%),0 3px 8px #3b6da533}
+input[type=range]:active::-webkit-slider-thumb{scale:1.12}
+input[type=range]::-moz-range-track{height:8px;border-radius:20px;background:#dce7f5}input[type=range]::-moz-range-progress{height:8px;border-radius:20px;background:var(--range-color)}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border:4px solid var(--range-color);border-radius:50%;background:#fff;box-shadow:0 2px 5px #3b6da533}
+#settings .check-label{font-size:12px;font-weight:750;color:#344d71;padding:14px 0;margin:0;border-top:1px solid #dbe8f7;cursor:pointer}
+input[role=switch]{appearance:none;-webkit-appearance:none;position:relative;flex:none;width:48px;height:28px;margin:0;padding:0;border:1px solid #b9cbe1;border-radius:30px;background:#cfdbeb;box-shadow:inset 0 2px 4px #324c7020;cursor:pointer;transition:background .22s,border-color .22s}
+input[role=switch]::before{content:'';position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 2px 4px #24467430;transition:transform .32s cubic-bezier(.22,1.5,.45,1)}
+input[role=switch]:checked{background:#23ad90;border-color:#189e83}input[role=switch]:checked::before{transform:translateX(20px)}
+#settings .setting-note{font-size:10px;color:#7084a1;border-color:#dbe8f7;margin-top:7px}
+@media(max-width:760px){.floating-panel#settings{right:16px;width:min(320px,calc(100vw - 32px))}.editor-transport input[type=range]{min-height:28px}}
+@media(prefers-reduced-motion:reduce){input[role=switch],input[role=switch]::before,input[type=range]::-webkit-slider-thumb{transition:none}}
+#library .menu-tools #menu-settings.active,#library #import-toggle.active,.editor .transport-play.active{color:#fff;background:linear-gradient(160deg,var(--accent-light),var(--accent) 72%);border-color:var(--accent);box-shadow:inset 0 1px 0 #ffffff66,0 3px 0 var(--accent-dark),0 6px 15px color-mix(in srgb,var(--accent),transparent 74%)}
+#library .menu-tools #menu-settings.active svg,#library #import-toggle.active svg,.editor .transport-play.active svg{color:#fff}
+#favorite-filter svg,.card-actions .favorite svg,#trash-filter svg{color:var(--accent)}
+input[type=range]{border-radius:14px}
+
+/* Card geometry is independent of title length; full names remain in tooltips. */
+.song-card .song-pick{min-width:0;max-width:100%;overflow:hidden}
+.song-card .card-caption{min-width:0;overflow:hidden}
+.song-card .card-caption strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:22px;height:22px}
+.song-card .card-caption small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:14px;height:14px}
+.song-card .song-pick:focus-visible{outline-offset:-4px;border-radius:18px}
+
+.gallery-options{display:flex;align-items:center;gap:14px;flex:none;margin:15px 0 10px}
+#library .gallery-options .mode-switch{margin:0;flex:0 1 350px;width:350px}
+.mode-switch button[data-difficulty=hard]{--accent:#cb5d72;--accent-dark:#ab3c59;--accent-light:#ed8f9b}
+#demo-toggle{height:42px;min-width:72px;--accent:#15a080;--accent-dark:#13745f;--accent-light:#5bd0aa}
+#demo-toggle.active{color:#fff;background:linear-gradient(160deg,var(--accent-light),var(--accent) 72%);border-color:var(--accent);box-shadow:inset 0 1px 0 #ffffff66,0 3px 0 var(--accent-dark),0 6px 15px #15a08042}
+@media(max-width:760px){#library .gallery-options .mode-switch{width:auto;min-width:0;flex:1}.gallery-options{width:100%;gap:8px}#demo-toggle{min-width:60px}}
+.editor-filebar .difficulty-field{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;font-size:10px;font-weight:750;color:#6e7891}
+.editor-filebar .difficulty-field select{width:114px;padding:7px 25px 7px 9px;font-size:11px;background:#fff;border:1px solid #cbd9ee;border-radius:8px;color:#30456b;font-weight:750}
+#remove-difficulty{width:32px;height:32px;min-width:32px;padding:0}#remove-difficulty svg{width:15px;height:15px;color:#b7628e}
+@media(max-width:760px){.editor-filebar .difficulty-field select{width:95px}}
+/* The gallery footer shares one baseline; the segmented highlight is one moving surface. */
+#library .gallery-options{display:flex;align-items:center;gap:14px;min-height:48px;margin:18px 0 0;width:100%;padding-bottom:4px}
+#library .gallery-options .liquid-switch{position:relative;isolation:isolate;display:flex;align-items:center;gap:0;height:48px;min-height:48px;max-width:350px;min-width:175px;padding:5px;flex:0 1 350px;border:1px solid #c8d8f0;border-radius:17px;background:#ffffff80;box-shadow:inset 0 1px 3px #7996c31a;touch-action:pan-y;user-select:none}
+#library .liquid-switch button,#library .liquid-switch button.active{position:relative;z-index:1;flex:1;min-width:0;height:36px;padding:0;border:0;border-radius:12px;background:transparent;box-shadow:none;color:#48618a;font-size:12px;font-weight:800;transition:color .16s}
+#library .liquid-switch button.active{color:#fff}
+#library .liquid-switch button:hover{box-shadow:none;border:0;background:#ffffff18}
+#library .liquid-switch button:active{box-shadow:none}
+.difficulty-indicator{position:absolute;z-index:0;top:5px;left:5px;height:36px;width:calc((100% - 10px)/3);border:1px solid #4781e1;border-radius:12px;background:linear-gradient(155deg,#81b8ff,#467fe8);box-shadow:inset 0 1px 0 #ffffff88,0 3px 0 #3063be,0 4px 10px #477ce832;pointer-events:none;will-change:transform}
+#library .gallery-options #demo-toggle,#library .gallery-options #import-toggle{position:static;inset:auto;display:inline-flex;align-items:center;justify-content:center;gap:7px;height:48px;min-height:48px;width:auto;min-width:85px;flex:0 0 auto;padding:0 15px;margin:0;border-radius:16px;font-size:12px;font-weight:800;line-height:1}
+#library .gallery-options #import-toggle{margin-left:auto}
+#demo-toggle svg,#import-toggle svg{width:16px;height:16px;display:block}#demo-toggle svg{color:#169777}#demo-toggle.active svg{color:#fff}
+@media(max-width:760px){#library .gallery-options{gap:8px;margin-top:12px}#library .gallery-options .liquid-switch{flex:1;min-width:145px}#library .liquid-switch button{font-size:11px}#library .gallery-options #demo-toggle,#library .gallery-options #import-toggle{min-width:60px;padding:0 10px;font-size:11px;border-radius:14px;gap:5px}#demo-toggle svg,#import-toggle svg{width:14px;height:14px}}
+/* An inset gallery frame makes the scroll boundary deliberate. */
+#song-list{border:1px solid #c8d9eb;border-radius:20px;background:#ffffff38;box-shadow:inset 0 1px 5px #5578990e;padding:16px;scrollbar-gutter:stable;scrollbar-width:thin;scrollbar-color:#a8bed4 transparent}
+#song-list::-webkit-scrollbar{width:8px}#song-list::-webkit-scrollbar-thumb{background:#a8bed4;border-radius:10px;border:2px solid #edf5fc}#song-list::-webkit-scrollbar-track{background:transparent}
+/* Reserve room for a consistent chevron on every select. */
+select,.editor-filebar .difficulty-field select,.transport-controls select,#note-properties select{appearance:none;-webkit-appearance:none;padding-right:32px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23566b89' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center;background-size:14px 14px}
+/* Selected controls keep their fill, without browser focus rectangles. */
+button:focus,button:focus-visible,a:focus,a:focus-visible,input:focus,input:focus-visible,select:focus,select:focus-visible,textarea:focus,textarea:focus-visible,.file-button:focus-within{outline:none!important}
+.editor-filebar #chart-name:focus{border-color:#aeb8c8;box-shadow:inset 0 1px 3px #30374608}
+@media(max-width:760px){#song-list{padding:12px;border-radius:16px}}

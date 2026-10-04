@@ -1,0 +1,768 @@
+{
+  "audio": "/Users/mizuyomi/Downloads/でんの子P; 蒼姫ラピス - もうどくちゅうい.mp3",
+  "title": "もうどくちゅうい",
+  "artist": "でんの子P/蒼姫ラピス",
+  "duration_ms": 169201.134,
+  "sample_rate": 22050,
+  "tempo_candidates": [
+    {
+      "bpm": 140.0,
+      "eighth_phase_ms": 206.68,
+      "concentration": 0.6562,
+      "local_phase": [
+        {
+          "start_s": 0,
+          "phase_ms": 204.765,
+          "concentration": 0.6201
+        },
+        {
+          "start_s": 16,
+          "phase_ms": 202.127,
+          "concentration": 0.7307
+        },
+        {
+          "start_s": 32,
+          "phase_ms": 206.045,
+          "concentration": 0.6406
+        },
+        {
+          "start_s": 48,
+          "phase_ms": 207.774,
+          "concentration": 0.643
+        },
+        {
+          "start_s": 64,
+          "phase_ms": 205.681,
+          "concentration": 0.7123
+        },
+        {
+          "start_s": 80,
+          "phase_ms": 211.705,
+          "concentration": 0.7581
+        },
+        {
+          "start_s": 96,
+          "phase_ms": 208.169,
+          "concentration": 0.3283
+        },
+        {
+          "start_s": 112,
+          "phase_ms": 209.333,
+          "concentration": 0.8
+        },
+        {
+          "start_s": 128,
+          "phase_ms": 207.869,
+          "concentration": 0.759
+        },
+        {
+          "start_s": 144,
+          "phase_ms": 207.679,
+          "concentration": 0.6403
+        },
+        {
+          "start_s": 160,
+          "phase_ms": 201.214,
+          "concentration": 0.705
+        }
+      ]
+    },
+    {
+      "bpm": 70.0,
+      "eighth_phase_ms": 404.08,
+      "concentration": 0.3981,
+      "local_phase": [
+        {
+          "start_s": 0,
+          "phase_ms": 412.009,
+          "concentration": 0.6012
+        },
+        {
+          "start_s": 16,
+          "phase_ms": 340.144,
+          "concentration": 0.0843
+        },
+        {
+          "start_s": 32,
+          "phase_ms": 369.294,
+          "concentration": 0.155
+        },
+        {
+          "start_s": 48,
+          "phase_ms": 403.951,
+          "concentration": 0.4942
+        },
+        {
+          "start_s": 64,
+          "phase_ms": 408.377,
+          "concentration": 0.6617
+        },
+        {
+          "start_s": 80,
+          "phase_ms": 392.438,
+          "concentration": 0.2499
+        },
+        {
+          "start_s": 96,
+          "phase_ms": 367.483,
+          "concentration": 0.0993
+        },
+        {
+          "start_s": 112,
+          "phase_ms": 410.247,
+          "concentration": 0.2755
+        },
+        {
+          "start_s": 128,
+          "phase_ms": 411.649,
+          "concentration": 0.7203
+        },
+        {
+          "start_s": 144,
+          "phase_ms": 402.403,
+          "concentration": 0.5779
+        },
+        {
+          "start_s": 160,
+          "phase_ms": 410.225,
+          "concentration": 0.34
+        }
+      ]
+    },
+    {
+      "bpm": 210.01,
+      "eighth_phase_ms": 4.839,
+      "concentration": 0.3309,
+      "local_phase": [
+        {
+          "start_s": 0,
+          "phase_ms": 141.884,
+          "concentration": 0.5115
+        },
+        {
+          "start_s": 16,
+          "phase_ms": 35.637,
+          "concentration": 0.114
+        },
+        {
+          "start_s": 32,
+          "phase_ms": 15.3,
+          "concentration": 0.1001
+        },
+        {
+          "start_s": 48,
+          "phase_ms": 5.678,
+          "concentration": 0.4357
+        },
+        {
+          "start_s": 64,
+          "phase_ms": 1.295,
+          "concentration": 0.5692
+        },
+        {
+          "start_s": 80,
+          "phase_ms": 13.822,
+          "concentration": 0.209
+        },
+        {
+          "start_s": 96,
+          "phase_ms": 6.98,
+          "concentration": 0.0679
+        },
+        {
+          "start_s": 112,
+          "phase_ms": 4.066,
+          "concentration": 0.2727
+        },
+        {
+          "start_s": 128,
+          "phase_ms": 3.525,
+          "concentration": 0.625
+        },
+        {
+          "start_s": 144,
+          "phase_ms": 7.856,
+          "concentration": 0.4843
+        },
+        {
+          "start_s": 160,
+          "phase_ms": 6.312,
+          "concentration": 0.0725
+        }
+      ]
+    },
+    {
+      "bpm": 70.42,
+      "eighth_phase_ms": 409.721,
+      "concentration": 0.213,
+      "local_phase": [
+        {
+          "start_s": 0,
+          "phase_ms": 23.37,
+          "concentration": 0.5332
+        },
+        {
+          "start_s": 16,
+          "phase_ms": 25.069,
+          "concentration": 0.0589
+        },
+        {
+          "start_s": 32,
+          "phase_ms": 200.315,
+          "concentration": 0.1458
+        },
+        {
+          "start_s": 48,
+          "phase_ms": 321.748,
+          "concentration": 0.4323
+        },
+        {
+          "start_s": 64,
+          "phase_ms": 409.766,
+          "concentration": 0.6042
+        },
+        {
+          "start_s": 80,
+          "phase_ms": 32.875,
+          "concentration": 0.2751
+        },
+        {
+          "start_s": 96,
+          "phase_ms": 113.743,
+          "concentration": 0.0969
+        },
+        {
+          "start_s": 112,
+          "phase_ms": 258.366,
+          "concentration": 0.2456
+        },
+        {
+          "start_s": 128,
+          "phase_ms": 373.447,
+          "concentration": 0.6696
+        },
+        {
+          "start_s": 144,
+          "phase_ms": 26.143,
+          "concentration": 0.556
+        },
+        {
+          "start_s": 160,
+          "phase_ms": 101.929,
+          "concentration": 0.3464
+        }
+      ]
+    },
+    {
+      "bpm": 69.58,
+      "eighth_phase_ms": 417.385,
+      "concentration": 0.2086,
+      "local_phase": [
+        {
+          "start_s": 0,
+          "phase_ms": 373.187,
+          "concentration": 0.6006
+        },
+        {
+          "start_s": 16,
+          "phase_ms": 214.202,
+          "concentration": 0.0916
+        },
+        {
+          "start_s": 32,
+          "phase_ms": 110.986,
+          "concentration": 0.1522
+        },
+        {
+          "start_s": 48,
+          "phase_ms": 57.914,
+          "concentration": 0.4917
+        },
+        {
+          "start_s": 64,
+          "phase_ms": 406.874,
+          "concentration": 0.6179
+        },
+        {
+          "start_s": 80,
+          "phase_ms": 330.029,
+          "concentration": 0.2124
+        },
+        {
+          "start_s": 96,
+          "phase_ms": 188.468,
+          "concentration": 0.0882
+        },
+        {
+          "start_s": 112,
+          "phase_ms": 131.385,
+          "concentration": 0.2695
+        },
+        {
+          "start_s": 128,
+          "phase_ms": 18.826,
+          "concentration": 0.6789
+        },
+        {
+          "start_s": 144,
+          "phase_ms": 353.986,
+          "concentration": 0.5338
+        },
+        {
+          "start_s": 160,
+          "phase_ms": 290.858,
+          "concentration": 0.3329
+        }
+      ]
+    },
+    {
+      "bpm": 140.25,
+      "eighth_phase_ms": 38.206,
+      "concentration": 0.1922,
+      "local_phase": [
+        {
+          "start_s": 0,
+          "phase_ms": 4.257,
+          "concentration": 0.6013
+        },
+        {
+          "start_s": 16,
+          "phase_ms": 30.616,
+          "concentration": 0.7206
+        },
+        {
+          "start_s": 32,
+          "phase_ms": 66.15,
+          "concentration": 0.606
+        },
+        {
+          "start_s": 48,
+          "phase_ms": 93.17,
+          "concentration": 0.6237
+        },
+        {
+          "start_s": 64,
+          "phase_ms": 120.317,
+          "concentration": 0.6912
+        },
+        {
+          "start_s": 80,
+          "phase_ms": 153.549,
+          "concentration": 0.7256
+        },
+        {
+          "start_s": 96,
+          "phase_ms": 179.013,
+          "concentration": 0.3117
+        },
+        {
+          "start_s": 112,
+          "phase_ms": 207.302,
+          "concentration": 0.7509
+        },
+        {
+          "start_s": 128,
+          "phase_ms": 22.86,
+          "concentration": 0.7415
+        },
+        {
+          "start_s": 144,
+          "phase_ms": 49.877,
+          "concentration": 0.6168
+        },
+        {
+          "start_s": 160,
+          "phase_ms": 60.935,
+          "concentration": 0.7137
+        }
+      ]
+    },
+    {
+      "bpm": 209.57,
+      "eighth_phase_ms": 137.029,
+      "concentration": 0.1912,
+      "local_phase": [
+        {
+          "start_s": 0,
+          "phase_ms": 125.909,
+          "concentration": 0.4983
+        },
+        {
+          "start_s": 16,
+          "phase_ms": 123.827,
+          "concentration": 0.0831
+        },
+        {
+          "start_s": 32,
+          "phase_ms": 64.911,
+          "concentration": 0.0956
+        },
+        {
+          "start_s": 48,
+          "phase_ms": 26.46,
+          "concentration": 0.3615
+        },
+        {
+          "start_s": 64,
+          "phase_ms": 135.968,
+          "concentration": 0.5321
+        },
+        {
+          "start_s": 80,
+          "phase_ms": 124.807,
+          "concentration": 0.2484
+        },
+        {
+          "start_s": 96,
+          "phase_ms": 82.213,
+          "concentration": 0.0429
+        },
+        {
+          "start_s": 112,
+          "phase_ms": 42.85,
+          "concentration": 0.2564
+        },
+        {
+          "start_s": 128,
+          "phase_ms": 2.064,
+          "concentration": 0.5704
+        },
+        {
+          "start_s": 144,
+          "phase_ms": 118.963,
+          "concentration": 0.4727
+        },
+        {
+          "start_s": 160,
+          "phase_ms": 95.809,
+          "concentration": 0.0464
+        }
+      ]
+    },
+    {
+      "bpm": 139.74,
+      "eighth_phase_ms": 150.701,
+      "concentration": 0.1863,
+      "local_phase": [
+        {
+          "start_s": 0,
+          "phase_ms": 190.971,
+          "concentration": 0.6047
+        },
+        {
+          "start_s": 16,
+          "phase_ms": 157.889,
+          "concentration": 0.6972
+        },
+        {
+          "start_s": 32,
+          "phase_ms": 128.89,
+          "concentration": 0.6377
+        },
+        {
+          "start_s": 48,
+          "phase_ms": 103.935,
+          "concentration": 0.6233
+        },
+        {
+          "start_s": 64,
+          "phase_ms": 71.547,
+          "concentration": 0.6905
+        },
+        {
+          "start_s": 80,
+          "phase_ms": 49.09,
+          "concentration": 0.7348
+        },
+        {
+          "start_s": 96,
+          "phase_ms": 15.103,
+          "concentration": 0.3288
+        },
+        {
+          "start_s": 112,
+          "phase_ms": 202.831,
+          "concentration": 0.8008
+        },
+        {
+          "start_s": 128,
+          "phase_ms": 169.045,
+          "concentration": 0.7337
+        },
+        {
+          "start_s": 144,
+          "phase_ms": 140.511,
+          "concentration": 0.6295
+        },
+        {
+          "start_s": 160,
+          "phase_ms": 115.813,
+          "concentration": 0.6933
+        }
+      ]
+    }
+  ],
+  "energy_blocks": [
+    {
+      "start_s": 0,
+      "end_s": 4,
+      "rms": 0.43365,
+      "onset_mean": 0.2298
+    },
+    {
+      "start_s": 4,
+      "end_s": 8,
+      "rms": 0.48003,
+      "onset_mean": 0.1965
+    },
+    {
+      "start_s": 8,
+      "end_s": 12,
+      "rms": 0.47175,
+      "onset_mean": 0.2243
+    },
+    {
+      "start_s": 12,
+      "end_s": 16,
+      "rms": 0.42343,
+      "onset_mean": 0.2039
+    },
+    {
+      "start_s": 16,
+      "end_s": 20,
+      "rms": 0.32058,
+      "onset_mean": 0.1997
+    },
+    {
+      "start_s": 20,
+      "end_s": 24,
+      "rms": 0.36061,
+      "onset_mean": 0.1992
+    },
+    {
+      "start_s": 24,
+      "end_s": 28,
+      "rms": 0.29865,
+      "onset_mean": 0.2094
+    },
+    {
+      "start_s": 28,
+      "end_s": 32,
+      "rms": 0.32928,
+      "onset_mean": 0.188
+    },
+    {
+      "start_s": 32,
+      "end_s": 36,
+      "rms": 0.3202,
+      "onset_mean": 0.1571
+    },
+    {
+      "start_s": 36,
+      "end_s": 40,
+      "rms": 0.30762,
+      "onset_mean": 0.1638
+    },
+    {
+      "start_s": 40,
+      "end_s": 44,
+      "rms": 0.30352,
+      "onset_mean": 0.2342
+    },
+    {
+      "start_s": 44,
+      "end_s": 48,
+      "rms": 0.33122,
+      "onset_mean": 0.2706
+    },
+    {
+      "start_s": 48,
+      "end_s": 52,
+      "rms": 0.31262,
+      "onset_mean": 0.2711
+    },
+    {
+      "start_s": 52,
+      "end_s": 56,
+      "rms": 0.27606,
+      "onset_mean": 0.1742
+    },
+    {
+      "start_s": 56,
+      "end_s": 60,
+      "rms": 0.47581,
+      "onset_mean": 0.2244
+    },
+    {
+      "start_s": 60,
+      "end_s": 64,
+      "rms": 0.50316,
+      "onset_mean": 0.2007
+    },
+    {
+      "start_s": 64,
+      "end_s": 68,
+      "rms": 0.49094,
+      "onset_mean": 0.199
+    },
+    {
+      "start_s": 68,
+      "end_s": 72,
+      "rms": 0.48946,
+      "onset_mean": 0.2128
+    },
+    {
+      "start_s": 72,
+      "end_s": 76,
+      "rms": 0.49073,
+      "onset_mean": 0.2105
+    },
+    {
+      "start_s": 76,
+      "end_s": 80,
+      "rms": 0.49281,
+      "onset_mean": 0.2097
+    },
+    {
+      "start_s": 80,
+      "end_s": 84,
+      "rms": 0.48452,
+      "onset_mean": 0.1699
+    },
+    {
+      "start_s": 84,
+      "end_s": 88,
+      "rms": 0.2793,
+      "onset_mean": 0.1446
+    },
+    {
+      "start_s": 88,
+      "end_s": 92,
+      "rms": 0.29161,
+      "onset_mean": 0.1442
+    },
+    {
+      "start_s": 92,
+      "end_s": 96,
+      "rms": 0.30132,
+      "onset_mean": 0.1607
+    },
+    {
+      "start_s": 96,
+      "end_s": 100,
+      "rms": 0.32724,
+      "onset_mean": 0.1923
+    },
+    {
+      "start_s": 100,
+      "end_s": 104,
+      "rms": 0.34185,
+      "onset_mean": 0.229
+    },
+    {
+      "start_s": 104,
+      "end_s": 108,
+      "rms": 0.32601,
+      "onset_mean": 0.2249
+    },
+    {
+      "start_s": 108,
+      "end_s": 112,
+      "rms": 0.21276,
+      "onset_mean": 0.1972
+    },
+    {
+      "start_s": 112,
+      "end_s": 116,
+      "rms": 0.16668,
+      "onset_mean": 0.2477
+    },
+    {
+      "start_s": 116,
+      "end_s": 120,
+      "rms": 0.44719,
+      "onset_mean": 0.1921
+    },
+    {
+      "start_s": 120,
+      "end_s": 124,
+      "rms": 0.49717,
+      "onset_mean": 0.1346
+    },
+    {
+      "start_s": 124,
+      "end_s": 128,
+      "rms": 0.49322,
+      "onset_mean": 0.1381
+    },
+    {
+      "start_s": 128,
+      "end_s": 132,
+      "rms": 0.44043,
+      "onset_mean": 0.1606
+    },
+    {
+      "start_s": 132,
+      "end_s": 136,
+      "rms": 0.49454,
+      "onset_mean": 0.2259
+    },
+    {
+      "start_s": 136,
+      "end_s": 140,
+      "rms": 0.48854,
+      "onset_mean": 0.1977
+    },
+    {
+      "start_s": 140,
+      "end_s": 144,
+      "rms": 0.48639,
+      "onset_mean": 0.2083
+    },
+    {
+      "start_s": 144,
+      "end_s": 148,
+      "rms": 0.48996,
+      "onset_mean": 0.2157
+    },
+    {
+      "start_s": 148,
+      "end_s": 152,
+      "rms": 0.48695,
+      "onset_mean": 0.2007
+    },
+    {
+      "start_s": 152,
+      "end_s": 156,
+      "rms": 0.47859,
+      "onset_mean": 0.2226
+    },
+    {
+      "start_s": 156,
+      "end_s": 160,
+      "rms": 0.42908,
+      "onset_mean": 0.2068
+    },
+    {
+      "start_s": 160,
+      "end_s": 164,
+      "rms": 0.16577,
+      "onset_mean": 0.2212
+    },
+    {
+      "start_s": 164,
+      "end_s": 168,
+      "rms": 0.07846,
+      "onset_mean": 0.0116
+    },
+    {
+      "start_s": 168,
+      "end_s": 169.201134,
+      "rms": 0.0,
+      "onset_mean": 0.0
+    }
+  ],
+  "cover_file": "/Users/mizuyomi/Documents/ChatGPT/Noteline/exports/もうどくちゅうい/analysis/cover.jpg",
+  "features_file": "/Users/mizuyomi/Documents/ChatGPT/Noteline/exports/もうどくちゅうい/analysis/features.npz",
+  "phase_warning": "Eighth-note phase is not the first beat or bar; confirm downbeat and pickup separately."
+}

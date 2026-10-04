@@ -1,0 +1,19 @@
+import { normalizeChart } from '../src/engine.js';
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { ChartDocument,snapTime,findNote } from '../src/editor-model.js';
+const fresh=()=>new ChartDocument({name:'Editor',bpm:120,duration:10000,notes:[]});
+test('editor adds, moves, resizes and exports actual holds',()=>{const d=fresh(),id=d.add({lane:1,time:1000,end:2000});d.update([id],{time:1250,end:3000,lane:2});const c=normalizeChart(d.export());assert.deepEqual(c.notes,[{lane:2,time:1250,end:3000}]);assert.equal(c.version,3);});
+test('undo and redo restore duration and location exactly',()=>{const d=fresh(),id=d.add({lane:0,time:1000,end:2000});d.update([id],{end:3500});d.undo();assert.equal(d.notes[0].end,2000);d.redo();assert.equal(d.notes[0].end,3500);d.remove([id]);d.undo();assert.equal(d.notes[0].id,id);});
+test('invalid overlap is rolled back atomically with no history entry',()=>{const d=fresh();d.add({lane:0,time:1000,end:2000});const before=d.snapshot(),history=d.undoStack.length;assert.throws(()=>d.add({lane:0,time:1500}));assert.deepEqual(d.snapshot(),before);assert.equal(d.undoStack.length,history);});
+test('multi-note moves validate the whole selection and can be undone',()=>{const d=fresh();const a=d.add({lane:0,time:1000}),b=d.add({lane:1,time:2000,end:2500});d.update([a,b],n=>({lane:n.lane+1,time:n.time+500,...(n.end?{end:n.end+500}:{})}));assert.equal(d.notes[0].lane,1);assert.equal(d.notes[1].end,3000);d.undo();assert.equal(d.notes[1].end,2500);});
+test('audio boundaries prevent notes that cannot finish',()=>{const d=fresh();assert.throws(()=>d.add({lane:0,time:9900,end:10100}));assert.throws(()=>d.add({lane:0,time:10001}));assert.equal(d.notes.length,0);});
+test('undo followed by new editing invalidates redo',()=>{const d=fresh();d.add({lane:0,time:1000});d.undo();d.add({lane:1,time:2000});assert.equal(d.redoStack.length,0);});
+test('grid snapping is accurate for common subdivisions',()=>{assert.equal(snapTime(119,120,4),125);assert.equal(snapTime(249,120,2),250);assert.equal(snapTime(123.4,120,0),123.4);});
+test('hit testing includes a hold body and its editable tail',()=>{const notes=[{id:'a',lane:1,time:1000,end:3000}];assert.equal(findNote(notes,2500,1,10).id,'a');assert.equal(findNote(notes,3008,1,10).id,'a');assert.equal(findNote(notes,2500,2,10),null);});
+test('tap conversion removes hold data when exported',()=>{const d=fresh(),id=d.add({lane:0,time:1000,end:2000});d.update([id],{end:undefined});assert.deepEqual(normalizeChart(d.export()).notes,[{lane:0,time:1000}]);});
+test('offset snapping follows actual first beat including negative origins',()=>{assert.equal(snapTime(390,120,4,375),375);assert.equal(snapTime(507,120,4,375),500);assert.equal(snapTime(30,120,1,-100),-100);assert.equal(snapTime(123.4,120,0,375),123.4);});
+test('beat origin survives export, reopening and undo without moving notes',()=>{const d=fresh();d.add({lane:1,time:1000,end:2000});d.transact(()=>d.beatOffset=375);const chart=normalizeChart(d.export());assert.equal(chart.beatOffset,375);assert.deepEqual(chart.notes,[{lane:1,time:1000,end:2000}]);assert.equal(new ChartDocument(chart).beatOffset,375);d.undo();assert.equal(d.beatOffset,0);d.redo();assert.equal(d.beatOffset,375);d.transact(()=>d.bpm=150);assert.equal(d.beatOffset,375);assert.equal(d.notes[0].time,1000);});
+test('invalid beat origin rolls back even on an empty document',()=>{const d=fresh();assert.throws(()=>d.transact(()=>d.beatOffset=NaN));assert.equal(d.beatOffset,0);assert.throws(()=>d.transact(()=>d.beatOffset=3600001));});
+
+test('editor opens its own new format directly without losing precision',()=>{const d=fresh();d.add({lane:0,time:123.456,end:987.654});const reopened=new ChartDocument(d.export());assert.equal(reopened.notes[0].time,123.456);assert.equal(reopened.notes[0].end,987.654);});

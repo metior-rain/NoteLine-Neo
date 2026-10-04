@@ -1,0 +1,47 @@
+{
+  "easy": {
+    "notes": 204,
+    "holds": 28,
+    "doubleGroups": 4,
+    "maxSimultaneous": 2,
+    "peak1s": 3,
+    "firstMs": 810.811,
+    "lastMs": 132364.865,
+    "lanes": [
+      58,
+      48,
+      49,
+      49
+    ]
+  },
+  "normal": {
+    "notes": 416,
+    "holds": 34,
+    "doubleGroups": 16,
+    "maxSimultaneous": 2,
+    "peak1s": 5,
+    "firstMs": 810.811,
+    "lastMs": 132567.568,
+    "lanes": [
+      111,
+      95,
+      107,
+      103
+    ]
+  },
+  "hard": {
+    "notes": 633,
+    "holds": 39,
+    "doubleGroups": 75,
+    "maxSimultaneous": 2,
+    "peak1s": 10,
+    "firstMs": 810.811,
+    "lastMs": 132770.27,
+    "lanes": [
+      160,
+      153,
+      169,
+      151
+    ]
+  }
+}
